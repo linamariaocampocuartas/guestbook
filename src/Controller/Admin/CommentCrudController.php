@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class CommentCrudController extends AbstractCrudController
 {
@@ -49,7 +50,10 @@ class CommentCrudController extends AbstractCrudController
         yield TextField::new('author')->setHelp('Your name');
         yield EmailField::new('email', 'Email Address')->setHelp('Your valid email address');
         yield TextEditorField::new('text', 'Comment')->setHelp('help text')->hideOnIndex();
-        yield TextField::new('photoFilename');
+        yield ImageField::new('photoFilename')
+            ->setBasePath('/uploads/photos')
+            ->setLabel('Photo')
+            ->onlyOnIndex();
 
         $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
             'html5' => true,
