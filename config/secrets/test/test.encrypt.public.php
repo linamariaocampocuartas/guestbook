@@ -1,0 +1,3 @@
+<?php // test.encrypt.public on Wed, 17 May 2023 19:36:06 -0400
+
+return "Opr\xAAvxI\x3F\x87C\x8757\xE5\x29\xC1zT\xA5\xC2u5\x0BZV\x5E\xAD\x1Cd\x07\x88\x06";
