@@ -39,6 +39,9 @@ class Comment
     #[Assert\Email]
     private ?string $email = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $state = 'submitted';
+
     #[ORM\PrePersist]
     public function setCreatedAtValue()
     {
@@ -123,6 +126,18 @@ class Comment
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
