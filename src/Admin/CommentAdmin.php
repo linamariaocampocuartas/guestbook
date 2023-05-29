@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 final class CommentAdmin extends AbstractAdmin
@@ -70,4 +71,30 @@ final class CommentAdmin extends AbstractAdmin
                 ],
             ]);
     }    
+
+
+    protected function configureShowFields(ShowMapper $show): void
+    {
+        $show
+        ->tab('General')
+            ->with('Author', ['class' => 'col-md-6'])
+                ->add('id')
+                ->add('author')
+                ->add('email')
+            ->end()
+            ->with('Speaking of...', ['class' => 'col-md-6'])
+                ->add('conference')
+            ->end()            
+            ->with('Comment')
+                ->add('photoFilename')
+                ->add('text')
+            ->end()
+        ->end()
+        ->tab('Tracking')
+            ->with('Tracking information')
+                ->add('createdAt')
+                ->add('state')
+            ->end()
+        ->end();
+    }
 }
