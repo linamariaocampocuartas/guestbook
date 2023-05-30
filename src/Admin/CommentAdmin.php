@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class CommentAdmin extends AbstractAdmin
 {
@@ -36,7 +37,12 @@ final class CommentAdmin extends AbstractAdmin
                 ->end()            
                 ->with('Comment')
                     ->add('photoFilename')
-                    ->add('text')
+                    ->add('text', TextareaType::class, [
+                        'attr' => ['class' => 'tinymce'],
+                        'help' => 'Give us your objective opinion.',
+                        'label' => 'How did you like the conference?',
+                        'row_attr' => ['class' => 'text-editor'],
+                    ])
                 ->end()
             ->end()
             ->tab('Tracking')
@@ -62,7 +68,7 @@ final class CommentAdmin extends AbstractAdmin
         $list->addIdentifier('id')
             ->add('conference.slug')
             ->add('author')
-            ->add('text')
+            ->add('text', FieldDescriptionInterface::TYPE_HTML)            
             ->add('createdAt')
             ->add('conference')
             ->add('photoFilename')
