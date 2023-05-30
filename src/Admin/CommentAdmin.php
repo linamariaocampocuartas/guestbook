@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -120,4 +121,14 @@ final class CommentAdmin extends AbstractAdmin
     {
         return ['email', 'author', 'conference.city', 'text'];
     }    
+
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        if ($this->isChild()) {
+            return;
+        }
+    }
+
+    
 }

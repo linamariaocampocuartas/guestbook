@@ -11,9 +11,16 @@ use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 final class ConferenceAdmin extends AbstractAdmin
 {
+    public function configure(): void{
+        $pool = $this->getConfigurationPool();
+        $this->addChild($pool->getAdminByAdminCode('admin.comment'));
+    }
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -72,4 +79,24 @@ final class ConferenceAdmin extends AbstractAdmin
     {
         $collection->remove('delete');
     }
+
+    protected function configureTabMenu(MenuItemInterface $menu, string $action, ?AdminInterface $childAdmin = null): void
+    {
+        if (!$childAdmin && !in_array($action, ['edit', 'show'])) {
+            return;
+        }
+
+        $admin = $this->isChild() ? $this->getParent() : $this;
+        $id = $admin->getRequest()->get('id');
+
+        $menu->addChild('View Conference', $admin->generateMenuUrl('show', ['id' => $id]));
+
+        if ($this->isGranted('EDIT')) {
+            $menu->addChild('Edit Conference', $admin->generateMenuUrl('edit', ['id' => $id]));
+        }
+
+        if ($this->isGranted('LIST')) {
+            $menu->addChild('Manage Comments', $admin->generateMenuUrl('admin.comment.list', ['id' => $id]));
+        }
+    }    
 }
