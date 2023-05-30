@@ -115,4 +115,9 @@ final class CommentAdmin extends AbstractAdmin
             ->end()
         ->end();
     }
+
+    protected function configureExportFields(): array
+    {
+        return ['email', 'author', 'conference.city', 'text'];
+    }    
 }
