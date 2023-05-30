@@ -41,16 +41,19 @@ services:
             - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Conference'}
 
 
-    admin.conference:
-        class: App\Admin\ConferenceAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\Conference, manager_type: orm, label: Conference, group: 'Academic events' }
-
-
     admin.comment:
         class: App\Admin\CommentAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Comment, manager_type: orm, label: 'Comment', group: 'Academic events' }
+
+    admin.conference:
+        class: App\Admin\ConferenceAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Conference, manager_type: orm, label: Conference, group: 'Academic events' }
+        calls:
+            - [addChild, ['App\Admin\CommentAdmin', 'conference']]
+
+    
 
 
 

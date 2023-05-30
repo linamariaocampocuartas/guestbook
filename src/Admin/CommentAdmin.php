@@ -12,9 +12,20 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 final class CommentAdmin extends AbstractAdmin
 {
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        if ($this->isChild()) {
+            return;
+        }
+
+        // This is the route configuration as a parent
+        $collection->clear();
+    }
 
     public function toString(object $object): string
     {
