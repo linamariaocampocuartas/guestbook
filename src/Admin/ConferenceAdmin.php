@@ -61,4 +61,6 @@ final class ConferenceAdmin extends AbstractAdmin
             ->add('slug')
             ->add('comments');
     }
+
+
 }
