@@ -7,9 +7,11 @@ use App\Entity\Conference;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class CommentAdmin extends AbstractAdmin
 {
@@ -40,7 +42,17 @@ final class CommentAdmin extends AbstractAdmin
             ->tab('Tracking')
                 ->with('Tracking information')
                     ->add('createdAt')
-                    ->add('state')
+                    ->add('state', ChoiceType::class, [
+                        'choices' => [
+                            'submitted' => 'submitted',
+                            'ham' => 'ham',
+                            'potential_spam' => 'potential_spam',
+                            'spam' => 'spam',
+                            'rejected' => 'rejected',
+                            'ready' => 'ready',
+                            'published' => 'published',
+                        ],
+                    ]) 
                 ->end()
             ->end();
     }

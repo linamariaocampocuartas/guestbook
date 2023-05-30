@@ -5,7 +5,9 @@ namespace App\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -49,8 +51,12 @@ final class ConferenceAdmin extends AbstractAdmin
             ->add('city')
             ->add('year')
             ->add('isInternational')
-            ->add('comments')
-            ->add('slug');
+            ->add('slug')
+            ->add('comments', FieldDescriptionInterface::TYPE_ARRAY, [
+                'inline' => false,
+                'display' => 'values'
+            ])
+        ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
@@ -62,5 +68,8 @@ final class ConferenceAdmin extends AbstractAdmin
             ->add('comments');
     }
 
-
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        $collection->remove('delete');
+    }
 }
